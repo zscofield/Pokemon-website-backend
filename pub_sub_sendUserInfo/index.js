@@ -15,34 +15,35 @@ const incomingMessage = Buffer.from(message.data,'base64').toString('utf-8');
 console.log("Encrypted Message " + incomingMessage);
 let parsedMessage = JSON.parse(incomingMessage);
 console.log("Decrypted Message" + JSON.stringify(parsedMessage));
+console.log("Pokemon Types : " + JSON.stringify(parsedMessage.pokemon_type));
+
+
 let ptypes;
-if(Array.isArray(parsedMessage.pokemon_type) == false){
-    ptypes = new Array(parsedMessage.pokemon_type);
+if(Array.isArray(parsedMessage.pokemon_type.types) == false){
+    ptypes = new Array(parsedMessage.pokemon_type.types);
 }
 else { // make sure types is read as an array even if one type is selected
-    ptypes = parsedMessage.pokemon_type;
+    ptypes = parsedMessage.pokemon_type.types;
 }
 
 
 sgMail.setApiKey('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');
 const msg = {
     email: parsedMessage.email_address,
-    pokemonTypes: ptypes
+    pokemonTypes: parsedMessage.pokemon_type
 };
 console.log(msg);
 
 
 
-let collectionRef = firestore.collection('pokemon'); 
+let collectionRef = firestore.collection('subscribers'); 
 console.log("pokemon collection found");
     let documentRef = await collectionRef.add(msg); console.log("message added to collectionRef");
     console.log("Document Created : " + documentRef.id); 
 
 
 
-if(error.response){
-    console.error(error.response.body);
-}
+
 
 
 
