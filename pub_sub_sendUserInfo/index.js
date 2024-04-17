@@ -27,7 +27,7 @@ else { // make sure types is read as an array even if one type is selected
 }
 
 
-sgMail.setApiKey('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');
+sgMail.setApiKey('APIKEY');
 const msg = {
     email: parsedMessage.email_address,
     pokemonTypes: parsedMessage.pokemon_type
